@@ -192,8 +192,8 @@ def create_provider_from_env(provider_type: ProviderType) -> LLMProvider:
     try:
         if provider_type == "openai":
             api_key = os.environ.get("OPENAI_API_KEY")
-            if not api_key:
-                raise TextGenerationError("OPENAI_API_KEY environment variable not set")
+            if not api_key or api_key.startswith("###") or api_key == "your_actual_api_key_here":
+                raise TextGenerationError("OPENAI_API_KEY environment variable not set or contains placeholder value. Please set a valid OpenAI API key in your .env file.")
             
             model = os.environ.get("OPENAI_MODEL", "gpt-4")
             
@@ -202,8 +202,8 @@ def create_provider_from_env(provider_type: ProviderType) -> LLMProvider:
             return LLMProvider(type=provider_type, config=config)
         elif provider_type == "anthropic":
             api_key = os.environ.get("ANTHROPIC_API_KEY")
-            if not api_key:
-                raise TextGenerationError("ANTHROPIC_API_KEY environment variable not set")
+            if not api_key or api_key.startswith("###") or api_key == "your_actual_api_key_here":
+                raise TextGenerationError("ANTHROPIC_API_KEY environment variable not set or contains placeholder value. Please set a valid Anthropic API key in your .env file.")
             
             model = os.environ.get("ANTHROPIC_MODEL", "claude-3-opus-20240229")
             
@@ -212,8 +212,8 @@ def create_provider_from_env(provider_type: ProviderType) -> LLMProvider:
             return LLMProvider(type=provider_type, config=config)
         elif provider_type == "gemini":
             api_key = os.environ.get("GEMINI_API_KEY")
-            if not api_key:
-                raise TextGenerationError("GEMINI_API_KEY environment variable not set")
+            if not api_key or api_key.startswith("###") or api_key == "your_actual_api_key_here":
+                raise TextGenerationError("GEMINI_API_KEY environment variable not set or contains placeholder value. Please set a valid Gemini API key in your .env file.")
             
             model = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash-latest")
             
